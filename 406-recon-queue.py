@@ -1,57 +1,68 @@
+import time
 
 
 class Solution:
+    # def reconstructQueue(self, people):
+    #     """
+    #     :type people: List[List[int]]
+    #     :rtype: List[List[int]]
+    #     """
+    #     i = 0
+    #     while i < len(people):
+    #         next_i = self.setInQueue(i, people)
+    #         # print(people, i, next_i)
+    #         i = next_i
+    #         # time.sleep(1)
+    #     return people
+
+    # def setInQueue(self, i, people):
+    #     taller_n = people[i][1]
+    #     height = people[i][0]
+    #     taller_c = 0
+    #     next_i = i + 1
+    #     new_i = -1
+    #     p_i = people[i]
+    #     for x, p in enumerate(people):
+    #         if taller_n == 0:
+    #             if x < i and p[0] >= height:
+    #                 new_i = x
+    #                 del people[i]
+    #                 people.insert(new_i, p_i)
+    #                 next_i = new_i + 1
+    #                 break
+    #         else:
+    #             if p[0] >= height and x != i:
+    #                 taller_c += 1
+
+    #             if taller_c == taller_n and x == i:
+    #                 break
+
+    #             if taller_c == taller_n + 1:
+    #                 new_i = x
+    #                 if new_i != i:
+    #                     if new_i < i:
+    #                         del people[i]
+    #                         people.insert(new_i, p_i)
+    #                         next_i = new_i + 1
+    #                     else:
+    #                         people.insert(new_i, p_i)
+    #                         del people[i]
+    #                         next_i = i
+    #                     break
+
+    #             if x == len(people) - 1:
+    #                 people.append(p_i)
+    #                 del people[i]
+    #                 next_i = i
+    #     return next_i
+
     def reconstructQueue(self, people):
-        """
-        :type people: List[List[int]]
-        :rtype: List[List[int]]
-        """
-        for i in range(len(people)):
-            next_i = self.setInQueue(i, people)
-            if next_i == len(people):
-                break
-            else:
-                i = next_i - 1
-        return people
-
-    def setInQueue(self, i, people):
-        taller_n = people[i][1]
-        height = people[i][0]
-        taller_c = 0
-        next_i = i + 1
-        new_i = -1
-        for x, p in enumerate(people):
-            if taller_n == 0:
-                if x < i and p[0] >= height:
-                    new_i = x
-                    tmp = people[i]
-                    people[i] = people[new_i]
-                    people[new_i] = tmp
-                    next_i = new_i
-                    break
-            else:
-                if p[0] >= height and x != i:
-                    taller_c += 1
-                
-                if taller_c == taller_n:
-                    new_i = x + 1
-                    if new_i != i:
-                        if new_i == len(people):
-                            people.append(people[i])
-                            del people[i]
-                        else:
-                            tmp = people[i]
-                            people[i] = people[new_i]
-                            people[new_i] = tmp
-
-                        if new_i < i:
-                            next_i = new_i
-                        else:
-                            next_i = i
-                        break
-
-        return next_i
-
+        people=sorted(people, key=lambda p: (-p[0],p[1]))
+        print(people)
+        queue = []
+        for p in people:
+            queue.insert(p[1], p)
+        return queue
 
 import unittest as ut
 
